@@ -88,6 +88,7 @@
 --   Homework 1 assignment in Canvas
 
 -- Successful sample output is as shown:
+TEST
 
 -- Turns column mode on but headers off
 .mode column
