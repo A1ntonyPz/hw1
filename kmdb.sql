@@ -88,7 +88,6 @@
 --   Homework 1 assignment in Canvas
 
 -- Successful sample output is as shown:
-TEST
 
 -- Turns column mode on but headers off
 .mode column
@@ -107,7 +106,7 @@ DROP TABLE IF EXISTS agents;
 CREATE TABLE agents (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   first_name TEXT,
-  last_name TEXT,
+  last_name TEXT
 );
 
 CREATE TABLE actors (
@@ -121,16 +120,15 @@ CREATE TABLE movies (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   movie_title TEXT,
   year_released INTEGER,
-  MPAA_rating TEXT
-  studio_name TEXT,
-  
+  MPAA_rating TEXT,
+  studio_name TEXT
 );
 
 CREATE TABLE roles (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   movie_ID INTEGER,
   actor_ID INTEGER,
-  character_name TEXT,
+  character_name TEXT
 );
 
 -- Insert data into your database that reflects the sample data shown above
@@ -153,9 +151,9 @@ VALUES
 
 INSERT INTO movies (movie_title, year_released, MPAA_rating, studio_name)
 VALUES
-    ('Batman Begins', 2005,'PG-13', 'Warner Bros.')
-    ('The Dark Knight', 2008,'PG-13', 'Warner Bros.')
-    ('The Dark Knight Rises', 2012,'PG-13', 'Warner Bros.')
+    ('Batman Begins', 2005,'PG-13', 'Warner Bros.'),
+    ('The Dark Knight', 2008,'PG-13', 'Warner Bros.'),
+    ('The Dark Knight Rises', 2012,'PG-13', 'Warner Bros.');
 
 SELECT id, first_name, last_name FROM actors ORDER BY id;
 SELECT id, movie_title, year_released, MPAA_rating, studio_name FROM movies ORDER BY id;
@@ -180,6 +178,18 @@ VALUES
   (3, 10, 'John Blake'),
   (3, 11, 'Selina Kyle');
 
+INSERT INTO agents (first_name, last_name)
+VALUES
+    ('Antony', 'Perez'),
+    ('Ben', 'Block');
+
+UPDATE actors
+SET agent_id = 1
+WHERE id <= 6;
+
+UPDATE actors
+SET agent_id = 2
+WHERE id > 6;
 
 
 -- Prints a header for the movies output
@@ -189,6 +199,8 @@ VALUES
 
 -- ***TODO!***
 -- The SQL statement for the movies output goes here.
+
+select * from movies;
 
 -- Example output:
 -- Movies
@@ -205,6 +217,11 @@ VALUES
 
 -- ***TODO!***
 -- The SQL statement for the cast output goes here.
+
+SELECT movies.movie_title, actors.first_name, actors.last_name, roles.character_name
+FROM roles
+JOIN movies ON roles.movie_id = movies.id
+JOIN actors ON roles.actor_id = actors.id;
 
 -- Example output:
 -- Top Cast
@@ -227,12 +244,18 @@ VALUES
 
 -- Prints a header for the agent's list of represented actors
 .print ""
-.print "Represented by agent"
+.print "Represented by agent:"
+SELECT agents.first_name, agents.last_name FROM agents WHERE id = 1;
 .print "===================="
 .print ""
 
 -- ***TODO!***
 -- The SQL statement for the represented actor(s) output goes here.
+
+SELECT actors.first_name, actors.last_name
+FROM actors
+JOIN agents ON actors.agent_id = agents.id
+WHERE agents.id = 1;
 
 -- Example output:
 -- Represented by agent
