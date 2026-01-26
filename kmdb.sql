@@ -155,9 +155,6 @@ VALUES
     ('The Dark Knight', 2008,'PG-13', 'Warner Bros.'),
     ('The Dark Knight Rises', 2012,'PG-13', 'Warner Bros.');
 
-SELECT id, first_name, last_name FROM actors ORDER BY id;
-SELECT id, movie_title, year_released, MPAA_rating, studio_name FROM movies ORDER BY id;
-
 INSERT INTO roles (movie_ID, actor_ID, character_name)
 VALUES
   (1, 1, 'Bruce Wayne'),
@@ -220,8 +217,8 @@ select * from movies;
 
 SELECT movies.movie_title, actors.first_name, actors.last_name, roles.character_name
 FROM roles
-JOIN movies ON roles.movie_id = movies.id
-JOIN actors ON roles.actor_id = actors.id;
+INNER JOIN movies ON roles.movie_id = movies.id
+INNER JOIN actors ON roles.actor_id = actors.id;
 
 -- Example output:
 -- Top Cast
@@ -254,7 +251,7 @@ SELECT agents.first_name, agents.last_name FROM agents WHERE id = 1;
 
 SELECT actors.first_name, actors.last_name
 FROM actors
-JOIN agents ON actors.agent_id = agents.id
+INNER JOIN agents ON actors.agent_id = agents.id
 WHERE agents.id = 1;
 
 -- Example output:
