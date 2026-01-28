@@ -99,6 +99,7 @@ DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS actors;
 DROP TABLE IF EXISTS agents;
+DROP TABLE IF EXISTS studios;
 
 -- Create new tables, according to your domain model
 -- TODO!
@@ -121,7 +122,7 @@ CREATE TABLE movies (
   movie_title TEXT,
   year_released INTEGER,
   MPAA_rating TEXT,
-  studio_name TEXT
+  studio_id INTEGER
 );
 
 CREATE TABLE roles (
@@ -129,6 +130,11 @@ CREATE TABLE roles (
   movie_ID INTEGER,
   actor_ID INTEGER,
   character_name TEXT
+);
+
+CREATE TABLE studios (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT
 );
 
 -- Insert data into your database that reflects the sample data shown above
@@ -149,11 +155,14 @@ VALUES
     ('Joseph', 'Gordon-Levitt'),
     ('Anne', 'Hathaway');
 
-INSERT INTO movies (movie_title, year_released, MPAA_rating, studio_name)
+INSERT INTO studios (name)
+VALUES ('Warner Bros.');
+
+INSERT INTO movies (movie_title, year_released, MPAA_rating, studio_id)
 VALUES
-    ('Batman Begins', 2005,'PG-13', 'Warner Bros.'),
-    ('The Dark Knight', 2008,'PG-13', 'Warner Bros.'),
-    ('The Dark Knight Rises', 2012,'PG-13', 'Warner Bros.');
+    ('Batman Begins', 2005,'PG-13', 1),
+    ('The Dark Knight', 2008,'PG-13', 1),
+    ('The Dark Knight Rises', 2012,'PG-13', 1);
 
 INSERT INTO roles (movie_ID, actor_ID, character_name)
 VALUES
@@ -197,7 +206,9 @@ WHERE id > 6;
 -- ***TODO!***
 -- The SQL statement for the movies output goes here.
 
-select * from movies;
+SELECT movies.movie_title, movies.year_released, movies.MPAA_rating, studios.name
+FROM movies
+INNER JOIN studios ON movies.studio_id = studios.id;
 
 -- Example output:
 -- Movies
